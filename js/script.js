@@ -22,17 +22,23 @@ let isInteger = (num) => {
 };
 
 let checkName = (name) => {
-    while (name === null || typeof name === "undefined" || name.trim() === "") {
-        name = prompt("Input your name: ");
+    let regexp = /^[a-zA-Z ]+$/;
+    let isValidName = /^[a-zA-Z ]+$/.test(name);
+    if (name === null ||name === "null" || name.trim() === "" || isValidName === false) {
+        return false;
     }
-    return name;
+    return true;
 };
 
 let checkAge = (age) => {
     age = Number(age);
-    while (isNaN(age) || !isInteger(age) || age === 0 || age === null) {
-        age = prompt("Input correct age: ");
+    if (isNaN(age) || !isInteger(age) || age <= 0 || age === null || age > 90) {
+        return false;
     }
+    return true;
+};
+
+let selectWelcome = (age, name) => {
     if (age < 18) {
         alert("You are not allowed to visit this website");
     } else if (age >= 18 && age <= 22) {
@@ -45,9 +51,15 @@ let checkAge = (age) => {
     } else {
         alert("Welcome, " + name);
     }
-    return age;
+    return true;
 };
 
-let name = checkName(prompt("Input your name: "));
+let name = prompt("Input your name: ");
+let age = prompt("Input your age: ");
 
-let age = checkAge(prompt("Input your age: "));
+while (!checkName(name) || !checkAge(age)) {
+    name = prompt("Input correct your name: ", name);
+    age = prompt("Input correct your age: ", age);
+}
+
+selectWelcome(age, name);
